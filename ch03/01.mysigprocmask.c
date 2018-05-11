@@ -20,13 +20,15 @@ int print_sigset_t (sigset_t *set){
 
 
 int main(){
-	sigset_t set1,set2,set3,set4;
+	sigset_t set1,set2,set3,set4,set5;
 
 	sigemptyset(&set1);	
 	sigemptyset(&set2);	
 	sigemptyset(&set3);	
 	sigemptyset(&set4);	
 
+	sigfillset(&set5);
+	
 	sigaddset(&set1, 1);
 	sigaddset(&set2, 2);
 	sigaddset(&set3, 3);
