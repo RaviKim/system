@@ -49,9 +49,9 @@ int main() {
 		perror("shmget failed !!");         
 		exit(1);
 	}
-#if 0
+#if 0 
 	sem_ctrl.val = 1;
-	if(semctl(semid, 0, SETVAL, sem_ctrl) == -1) {
+	if(semctl(sem_id, 0, SETVAL, sem_ctrl) == -1) {
 		perror("semctl");
 		exit(1);
 	}

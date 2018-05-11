@@ -12,22 +12,22 @@ int main() {
 	void *shm_addr;
 	int count;
 	
-	//¸Þ¸ð¸® °´Ã¼ »ý¼º
-	fd = ______("______", O_RDWR | O_CREAT, 0777);
+	//¿¿¿ ¿¿ ¿¿
+	fd = shm_open("/mydata", O_RDWR | O_CREAT, 0777);
 	if(fd == -1){
 		perror("shm_open");
 		exit(1);
 		//return EXIT_FAILURE;
 	}
 	
-	//¸Þ¸ð¸® °´Ã¼ Å©±â ¼³Á¤
-	if(_____(fd, MEM_SIZE) == -1){
+	//¿¿¿ ¿¿ ¿¿ ¿¿
+	if(ftruncate(fd, MEM_SIZE) == -1){
 		perror("ftruncate");
 		return EXIT_FAILURE;
 	}
 		
-	//¸Þ¸ð¸® °´Ã¼ ¸ÅÇÎ
-	shm_addr = _____(0, ______, PROT_READ | PROT_WRITE, ______, fd, 0);
+	//¿¿¿ ¿¿ ¿¿
+	shm_addr = mmap(0, MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	if(shm_addr == (void *)-1){
 		perror("mmap error");
 		return EXIT_FAILURE;
@@ -45,10 +45,10 @@ int main() {
 	printf("Input Enter to unmap shm...");
 	getchar();
 	
-	______(_____, ______);
+	munmap(shm_addr, MEM_SIZE);
 	close(fd);
 	
-	________("/mydata");
+	shm_unlink("/mydata");
 	
 	return 0;
 }

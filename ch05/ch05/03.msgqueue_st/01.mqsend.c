@@ -14,20 +14,20 @@ int main(void)
 		char m_text[1024];
 	}sendbuf;
 	
-	//¸Ş¼¼Áö Å¥ »ı¼º
-	msqid = _______________;
+	//¿¿¿ ¿ ¿¿
+	msqid =msgget(0x222, IPC_CREAT | 0666);
 	if(msqid == -1){
 		perror("msgget error");
 		exit(1);
 	}
 	
-	//¸Ş¼¼Áö Àü¼Û
+	//¿¿¿ ¿¿
 	while(1){
 		printf("Input Message -> ");
 		fgets(buf, 1024, stdin);
-		sendbuf.m_type = 1;		//¸Ş¼¼Áö Å¸ÀÔ ÁöÁ¤
+		sendbuf.m_type = 1;		// ¿¿¿ ¿¿ ¿¿
 		strcpy(sendbuf.m_text, buf);
-		____________________;	//0: wait till queue space is available
+		msgsnd(msqid,&sendbuf,strlen(sendbuf.m_text),0);	//0: wait till queue space is available
 		if(!strncmp(buf, "end", 3)){
 			break;
 		}

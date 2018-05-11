@@ -12,21 +12,21 @@ int main() {
 	void *shm_addr;
 	int count=0;
 	
-	fd = _____("/mydata", O_RDWR | O_CREAT, 0777);
+	fd = shm_open("/mydata", O_RDWR | O_CREAT, 0777);
 	if(fd == -1){
 		perror("shm_open");
 		exit(1);
 		//return EXIT_FAILURE;
 	}
 	
-	//¸Þ¸ð¸® °´Ã¼ Å©±â ¼³Á¤
-	if(______(fd, MEM_SIZE) == -1){
+	//¿¿¿ ¿¿ ¿¿ ¿¿
+	if(ftruncate(fd, MEM_SIZE) == -1){
 		perror("ftruncate");
 		return EXIT_FAILURE;
 	}
 	
-	//¸Þ¸ð¸® °´Ã¼ ¸ÅÇÎ
-	shm_addr = ______(0, MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+	//¿¿¿ ¿¿ ¿¿
+	shm_addr = mmap(0, MEM_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 	if(shm_addr == (void *)-1){
 		perror("mmap error");
 		return EXIT_FAILURE;
@@ -41,6 +41,6 @@ int main() {
 		}
 		sleep(1);
 	}
-	_____(fd);
+	close(fd);
 	return 0;
 }

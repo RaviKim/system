@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 	
 	while(1){
 		//¸Þ½ÃÁö Àü¼Û
-		if((________(mqd, (char *)&value, attr.mq_msgsize, NULL)) == -1){
+		if((mq_receive(mqd, (char *)&value, attr.mq_msgsize, NULL)) == -1){
 			perror("mq_receive error");
 			mq_close(mqd);
 			exit(1);
@@ -36,8 +36,8 @@ int main(int argc, char *argv[]){
 	}
 	mq_close(mqd);
 	
-	//POSIX ¸Þ¼¼Áö Å¥ Á¦°Å
-	_______("/my_queue");
+	//POSIX ¿¿¿ ¿ ¿¿ 
+	mq_unlink("/my_queue");
 	printf("MQ Receiver is out");
 	
 	return 0;

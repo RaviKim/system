@@ -15,15 +15,15 @@ int main(void)
 		char m_text[1024];
 	}recvbuf;
 	
-	//기존 메세지 큐를 구하거나 새로운 메세지 큐 객체 생성
-	msqid = _____(0x222, IPC_CREAT | 0666);
+	// 옜 옜� 옜 
+	msqid = msgget(0x222, IPC_CREAT | 0666);
 	if(msqid == -1){
 		perror("msgget error");
 		exit(1);
 	}
 	
 	while(1){
-		n = _______(msqid, &recvbuf, 1024, 0, 0);
+		n = msgrcv(msqid, &recvbuf, 1024, 0, 0);
 		recvbuf.m_text[n] = '\0';
 		printf("\e[31mRx: %s\e[0m", recvbuf.m_text);
 		if(!strncmp(recvbuf.m_text,"end", 3)){
@@ -32,7 +32,7 @@ int main(void)
 	}
 	
 	//메세지 큐 객체 삭제
-	if(_____(msqid, _____, 0) == -1){
+	if(msgctl(msqid, IPC_RMID, 0) == -1){
 		perror("msgctl error");
 		exit(1);
 	}

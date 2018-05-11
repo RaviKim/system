@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
 	printf("MQ Sender program start -----\n");
 	
 	//메세지 큐 열기/생성
-	mqd = _______("/my_queue", O_WRONLY, 0666, &attr);
+	mqd = mq_open("/my_queue", O_WRONLY, 0666, &attr);
 	if(mqd == -1){
 		perror("mq_open error");
 		exit(1);
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
 	
 	while(1){
 		//메시지 전송
-		if((______(mqd, (char *)&value, attr.mq_msgsize, 1)) == -1){
+		if((mq_send(mqd, (char *)&value, attr.mq_msgsize, 1)) == -1){
 			perror("mq_send error");
 			mq_close(mqd);
 			exit(1);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 		}
 		sleep(1);
 	}
-	____________
+	mq_close(mqd);
 	printf("MQ Sender is out");
 	
 	return 0;
